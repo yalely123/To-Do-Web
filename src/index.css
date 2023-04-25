@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+    .btn {
+        @apply w-full h-12 border-2 border-cyan-600 bg-cyan-600 p-3 text-white rounded-md hover:bg-cyan-900
+    }
+}

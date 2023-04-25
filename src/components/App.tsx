@@ -1,102 +1,101 @@
-import Avatar from 'components/Avatar'
+import { useState } from "react"
 
 function App() {
+  const [input, setInput] = useState("")
+  const [todos, setTodos] = useState([])
+  function handleAddTodo(e) {
+    e.preventDefault()
+    setTodos((prev) => [...prev, {
+      id: prev.length + 1,
+      title: input,
+      complete: false
+  }])
+    setInput("")
+  }
+  function handleDelete(id) {
+    setTodos((prev) => prev.filter((todo) => todo.id !== id))
+  }
+  function handleCheck(id) {
+    setTodos((prev) => prev.map((todo) => {
+      if (todo.id === id) {
+        return {...todo, complete: !todo.complete} // bring all value in previous todo variable
+      }
+      return todo
+    }))
+  }
+  function deleteAllCompleteTasks() {
+    setTodos((prev) => prev.filter((todo) => !todo.complete))
+  }
+
+  function deleteAllTasks() {
+    setTodos([])
+  }
+  // const todos = [
+  //   {
+  //     id: 1,
+  //     title: "Learn React JS basics",
+  //     complete: true
+  //   },
+  //   {
+  //     id: 2,
+  //     title: "Practice React JS",
+  //     complete: false
+  //   },
+  //   {
+  //     id: 3,
+  //     title: "Learn Redux",
+  //     complete: false
+  //   },
+  //   {
+  //     id: 4,
+  //     title: "Code portfolio in React",
+  //     complete: false
+  //   },
+  //   {
+  //     id: 5,
+  //     title: "Learn React Native",
+  //     complete: false
+  //   }
+
   return (
-    <div className="relative overflow-hidden bg-white">
-      <div className="h-screen sm:pt-24 sm:pb-40 lg:pt-40 lg:pb-48">
-        <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
-          <div className="sm:max-w-lg">
-            <div className="my-4">
-              <Avatar
-                size="large"
-                src="https://www.gravatar.com/avatar/4405735f6f3129e0286d9d43e7b460d0"
-              />
-            </div>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-              Welcome!
-            </h1>
-            <p className="mt-4 text-xl text-gray-500">
-              This is a boilerplate build with Vite, React 18, TypeScript,
-              Vitest, Testing Library, TailwindCSS 3, Eslint and Prettier.
-            </p>
+    <div className="w-screen justify-center items-center flex">    
+      <div className="flex flex-col w-[768px]">
+        <div className="">
+          <div className="text-center text-3xl font-semibold">To Do Input</div>
+          <div className="flex flex-col border-2 px-4 py-2 m-4">
+            <input className="border-2 my-2 h-12" type="text" value={input} onChange={(e) => setInput(e.target.value)}/>
+            <button className="btn my-2" type="button" onClick={handleAddTodo}>Add New Task</button>
           </div>
-          <div>
-            <div className="my-10">
-              <a
-                href="vscode://"
-                className="inline-block rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-center font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"
-              >
-                Start building for free
-              </a>
-              <div
-                aria-hidden="true"
-                className="pointer-events-none mt-10 md:mt-0 lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
-              >
-                <div className="absolute sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-                  <div className="flex items-center space-x-6 lg:space-x-8">
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
-                        <img
-                          src="https://picsum.photos/600?random=1"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://picsum.photos/600?random=2"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://picsum.photos/600?random=3"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://picsum.photos/600?random=4"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://picsum.photos/600?random=5"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://picsum.photos/600?random=6"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://picsum.photos/600?random=7"
-                          alt=""
-                          className="h-full w-full bg-indigo-100 object-cover object-center"
-                        />
-                      </div>
-                    </div>
+        </div>
+
+        <div className="">
+          <div className = "text-center text-3xl font-semibold my-4">To Do List</div>
+          <div className="flex flex-row mb-9">
+            <button className="btn mr-4" type="button">All</button>
+            <button className="btn mx-4" type="button">Done</button>
+            <button className="btn ml-4" type="button">TODO</button>
+          </div>
+          <div className="">
+            {todos.map((todo) => {
+              return (
+                <div key={todo.id} className="flex justify-between border-2 my-2 p-2">
+                  <span>{todo.title}</span>
+                  <div>
+                    <input className="mx-1" type="checkbox" checked={todo.complete} onChange= {() => handleCheck(todo.id)}/>
+                    <button className="mx-1" type="button" onClick={()=> handleDelete(todo.id)}>X</button>
                   </div>
                 </div>
-              </div>
-            </div>
+              )
+            })}
+          </div>
+          <div className="flex flex-row my-4">
+            <button className="w-full h-12 border-2 border-red-700 bg-red-700 p-3 text-white rounded-md mx-4 hover:bg-red-950" type="button" onClick= {deleteAllCompleteTasks}>Delete Done Task</button>
+            <button className="w-full h-12 border-2 border-red-700 bg-red-700 p-3 text-white rounded-md mx-4 hover:bg-red-950" type="button" onClick={deleteAllTasks}>Delete All Task</button>
           </div>
         </div>
       </div>
     </div>
+
   )
 }
 
